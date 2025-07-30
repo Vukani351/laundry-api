@@ -10,6 +10,26 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@common/*": [
+        "src/common/*"
+      ],
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@user/*": [
+        "src/user/*"
+      ],
+      "@laundry/*": [
+        "src/laundry/*"
+      ],
+      "@Laundromat/*": [
+        "src/laundromat/*"
+      ]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
