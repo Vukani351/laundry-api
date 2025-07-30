@@ -1,0 +1,40 @@
+import { User } from '@/user/entities/user.model';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+
+@Table({
+    tableName: 'Laundry',
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+})
+export class Laundry extends Model {
+    @Column({
+        type: DataType.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    })
+    declare id: number;
+
+    @ForeignKey(() => User)
+    @Column(DataType.INTEGER)
+    owner_id: number;
+
+    @BelongsTo(() => User, 'owner_id')
+    owner: User;
+
+    @ForeignKey(() => User)
+    @Column(DataType.INTEGER)
+    admin_id: number;
+
+    @BelongsTo(() => User, 'admin_id')
+    admin: User;
+
+    @Column(DataType.DECIMAL(10, 2))
+    weight: number;
+
+    @Column(DataType.DECIMAL(10, 2))
+    price: number;
+
+    @Column(DataType.STRING)
+    status: string;
+}
