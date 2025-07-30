@@ -1,26 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreateLaundryDto } from './dto/create-laundry.dto';
 import { UpdateLaundryDto } from './dto/update-laundry.dto';
+import { Laundry } from './entities/laundry.model';
 
 @Injectable()
 export class LaundryService {
-  create(createLaundryDto: CreateLaundryDto) {
-    return 'This action adds a new laundry';
+  constructor(
+    @InjectModel(Laundry)
+    private laundryModel: typeof Laundry,
+  ) { }
+
+  async create(createLaundryDto: CreateLaundryDto): Promise<Laundry> {
+    return this.laundryModel.create({ ...createLaundryDto });
   }
 
-  findAll() {
-    return `This action returns all laundry`;
+  async findAll(): Promise<Laundry[]> {
+    return this.laundryModel.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} laundry`;
+  async findOne(id: number): Promise<Laundry> {
+    const laundry = await this.laundryModel.findByPk(id);
+    if (!laundry) {
+      throw new NotFoundException(`Laundry with id ${id} not found`);
+    }
+    return laundry;
   }
 
-  update(id: number, updateLaundryDto: UpdateLaundryDto) {
-    return `This action updates a #${id} laundry`;
+  async update(id: number, updateLaundryDto: UpdateLaundryDto): Promise<Laundry> {
+    const laundry = await this.laundryModel.findByPk(id);
+    if (!laundry) {
+      throw new NotFoundException(`Laundry with id ${id} not found`);
+    }
+    return laundry.update(updateLaundryDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} laundry`;
+  async remove(id: number): Promise<void> {
+    const laundry = await this.laundryModel.findByPk(id);
+    if (!laundry) {
+      throw new NotFoundException(`Laundry with id ${id} not found`);
+    }
+    await laundry.destroy();
   }
 }

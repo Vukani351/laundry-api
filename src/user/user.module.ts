@@ -13,5 +13,3 @@ import { User } from './entities/user.model';
 export class UserModule { }
 
 
-
-

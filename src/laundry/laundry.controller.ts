@@ -5,11 +5,11 @@ import { UpdateLaundryDto } from './dto/update-laundry.dto';
 
 @Controller('laundry')
 export class LaundryController {
-  constructor(private readonly laundryService: LaundryService) {}
+  constructor(private readonly laundryService: LaundryService) { }
 
   @Post()
   create(@Body() createLaundryDto: CreateLaundryDto) {
-    return this.laundryService.create(createLaundryDto);
+    return this.laundryService.create({ ...createLaundryDto });
   }
 
   @Get()
