@@ -8,7 +8,7 @@ import { User } from './entities/user.model';
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  @Post()
+  @Post('create')
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto);
   }
@@ -18,12 +18,21 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Get('login')
+  login(
+    @Body('firstname') firstname: string,
+    @Body('phone') phone: number,
+    @Body('lastname') lastname: string
+  ): Promise<User | null> {
+    return this.userService.login(firstname, lastname, phone);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string): Promise<User | null> {
     return this.userService.findOne(Number(id));
   }
 
-  @Put(':id')
+  @Put('update/:id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<User> {
     return this.userService.update(Number(id), updateUserDto);
   }

@@ -17,20 +17,32 @@ export class User extends Model {
     })
     declare id: number;
 
-    @Column(DataType.STRING)
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
     username: string;
 
     @ForeignKey(() => Role)
-    @Column(DataType.INTEGER)
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
     role_id: number;
 
     @BelongsTo(() => Role)
     role: Role;
 
-    @Column(DataType.INTEGER)
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
     phone: number;
 
-    @Column(DataType.TEXT)
+    @Column({
+        type: DataType.TEXT,
+        allowNull: true, // This is the default, but explicit is clearer
+    })
     address: string;
 
     @HasMany(() => Laundry)
