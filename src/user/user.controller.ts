@@ -9,7 +9,7 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Post('create')
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  create(@Body() createUserDto: CreateUserDto): Promise<string> {
     return this.userService.create(createUserDto);
   }
 
@@ -23,7 +23,7 @@ export class UserController {
     @Body('firstname') firstname: string,
     @Body('phone') phone: number,
     @Body('lastname') lastname: string
-  ): Promise<User | null> {
+  ): Promise<string | null> {
     return this.userService.login(firstname, lastname, phone);
   }
 

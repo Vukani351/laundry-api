@@ -3,40 +3,51 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.model';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User)
     private userModel: typeof User,
+    private jwtService: JwtService
   ) { }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async findAll(): Promise<User[]> {
+    return this.userModel.findAll();
+  }
+
+  async create(createUserDto: CreateUserDto): Promise<string> {
     /*
     * todo:
     * Verify the number username
     * */
     const user = await this.userModel.findOne({
       where: {
-        lastName: createUserDto.lastName,
+        username: createUserDto.firstName + ' ' + createUserDto.lastName,
         phone: createUserDto.phone,
       }
     });
 
     if (user) {
       throw new UnauthorizedException('User already exists.');
-    } else if (createUserDto.lastName || createUserDto.phone) {
+    } else if (!createUserDto.firstName || !createUserDto.phone) {
+      console.error('User email or number is missing.', { ...createUserDto });
       throw new UnauthorizedException('User email or number is missing.');
     }
 
-    return this.userModel.create({ ...createUserDto });
+    const newUserDetails = {
+      username: createUserDto.firstName + ' ' + createUserDto.lastName,
+      role_id: createUserDto?.role_id || 3,
+      phone: createUserDto.phone,
+      address: createUserDto?.address || ""
+    };
+
+    const newUser = (await this.userModel.create({ ...newUserDetails })).toJSON();
+    return await this.jwtService.signAsync({ sub: newUser.id, username: newUser.username });
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.findAll();
-  }
-
-  async login(firstname: string, secondname: string, phone: number): Promise<User> {
+  async login(firstname: string, secondname: string, phone: number): Promise<any> {
     const user = await this.userModel.findOne({
       where: {
         username: firstname + ' ' + secondname,
@@ -46,7 +57,11 @@ export class UserService {
     if (!user) {
       throw new Error('User not found');
     }
-    return user;
+    return {
+      access_token: await this.jwtService.sign({
+        sub: user.id, username: user.username, role_id: user.role_id, address: user.address
+      })
+    };
   }
 
   async findOne(id: number): Promise<User> {
