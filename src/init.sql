@@ -1,8 +1,3 @@
-CREATE DATABASE laundry_mvp;
-
--- Connect to the database and run these:
-\c laundry_mvp
-
 -- Create Role table first (referenced by User)
 CREATE TABLE "Role" (
   "id" SERIAL PRIMARY KEY,
@@ -27,7 +22,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Laundromat" (
   "id" SERIAL PRIMARY KEY,
   "title" VARCHAR(255),
-  "body" TEXT,
+  "address" TEXT,
   "user_id" INTEGER NOT NULL REFERENCES "User"("id"),
   "status" VARCHAR(255),
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -47,7 +42,7 @@ CREATE TABLE "Laundry" (
 );
 
 -- Add comments
-COMMENT ON COLUMN "Laundromat"."body" IS 'Content of the laundry';
+COMMENT ON COLUMN "Laundromat"."address" IS 'Content of the laundry';
 
 -- Create indexes for better performance
 CREATE INDEX idx_laundry_owner ON "Laundry" ("owner_id");
