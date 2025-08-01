@@ -2,7 +2,7 @@ import { User } from '@/user/entities/user.model';
 import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 
 @Table({
-    tableName: 'Laundrymat',
+    tableName: 'Laundromat',
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
@@ -19,7 +19,7 @@ export class Laundromat extends Model {
     title: string;
 
     @Column(DataType.TEXT)
-    body: string;
+    address: string;
 
     @ForeignKey(() => User)
     @Column(DataType.INTEGER)

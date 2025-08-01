@@ -34,12 +34,11 @@ export class UserService {
     } else if (!createUserDto.firstName || !createUserDto.phone) {
       throw new UnauthorizedException('User email or number is missing.');
     }
-
     const newUserDetails = {
       username: createUserDto.firstName + ' ' + createUserDto.lastName,
-      role_id: createUserDto?.role_id || 3,
       phone: createUserDto.phone,
-      address: createUserDto?.address || ""
+      role_id: createUserDto!.role_id,
+      address: createUserDto?.address
     };
 
     const newUser = (await this.userModel.create({ ...newUserDetails })).toJSON();

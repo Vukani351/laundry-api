@@ -5,9 +5,9 @@ import { UpdateLaundromatDto } from './dto/update-laundromat.dto';
 
 @Controller('laundromat')
 export class LaundromatController {
-  constructor(private readonly laundromatService: LaundromatService) {}
+  constructor(private readonly laundromatService: LaundromatService) { }
 
-  @Post()
+  @Post('new')
   create(@Body() createLaundromatDto: CreateLaundromatDto) {
     return this.laundromatService.create(createLaundromatDto);
   }
