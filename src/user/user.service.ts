@@ -27,12 +27,11 @@ export class UserService {
         username: createUserDto.firstName + ' ' + createUserDto.lastName,
         phone: createUserDto.phone,
       }
-    });
+    }).then(user => user?.toJSON());
 
     if (user) {
       throw new UnauthorizedException('User already exists.');
     } else if (!createUserDto.firstName || !createUserDto.phone) {
-      console.error('User email or number is missing.', { ...createUserDto });
       throw new UnauthorizedException('User email or number is missing.');
     }
 
@@ -53,10 +52,11 @@ export class UserService {
         username: firstname + ' ' + secondname,
         phone: phone
       }
-    });
+    }).then(user => user?.toJSON());
     if (!user) {
       throw new Error('User not found');
     }
+
     return {
       access_token: await this.jwtService.sign({
         sub: user.id, username: user.username, role_id: user.role_id, address: user.address
