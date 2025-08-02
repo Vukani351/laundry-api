@@ -3,6 +3,11 @@ import { CreateLaundromatDto } from './create-laundromat.dto';
 import { IsString, IsNotEmpty, IsNumber } from '@nestjs/class-validator';
 
 export class UpdateLaundromatDto extends PartialType(CreateLaundromatDto) {
+
+    @IsNumber()
+    @IsNotEmpty()
+    id: number;
+
     @IsString()
     @IsNotEmpty()
     title: string;

@@ -48,9 +48,17 @@ export class LaundromatService {
   }
 
   async update(id: number, updateLaundromatDto: UpdateLaundromatDto) {
-    // const laundromat = await this.laundromatModel.findByPk(id);
-    // return { status: 200, laundromat: laundromat?.toJSON() };
-    return `This action updates a #${id} laundromat`;
+    try {
+      const laundromat = await this.laundromatModel.findByPk(id);
+      if (!laundromat) {
+        return { status: 401, message: "Laundromat does not exists." };
+      }
+
+      await laundromat.update(updateLaundromatDto);
+      return { status: 200, laundromat: laundromat?.toJSON() };
+    } catch (error) {
+      return error;
+    }
   }
 
   remove(id: number) {
