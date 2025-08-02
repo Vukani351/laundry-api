@@ -11,8 +11,11 @@ export class LaundromatService {
     private laundromatModel: typeof Laundromat,
   ) { }
 
+  findAll() {
+    return `This action returns all laundromat`;
+  }
+
   async create(createLaundromatDto: CreateLaundromatDto) {
-    console.log("createLaundromatDto: ", createLaundromatDto);
     try {
       const laundromat = await this.laundromatModel.findOne({
         where: {
@@ -22,7 +25,7 @@ export class LaundromatService {
       });
 
       if (laundromat) {
-        return { status: 401, message: "Laundromat already exists" };
+        return { status: 401, message: "Laundromat already exists", laundromat: laundromat?.toJSON() };
       }
     } catch (error) {
       return 'This action for a new laundromat failed';
@@ -35,15 +38,18 @@ export class LaundromatService {
     };
   }
 
-  findAll() {
-    return `This action returns all laundromat`;
+  async findOne(id: number) {
+    try {
+      const laundromat = await this.laundromatModel.findByPk(id);
+      return { status: 200, laundromat: laundromat?.toJSON() };
+    } catch (error) {
+      throw error;
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} laundromat`;
-  }
-
-  update(id: number, updateLaundromatDto: UpdateLaundromatDto) {
+  async update(id: number, updateLaundromatDto: UpdateLaundromatDto) {
+    // const laundromat = await this.laundromatModel.findByPk(id);
+    // return { status: 200, laundromat: laundromat?.toJSON() };
     return `This action updates a #${id} laundromat`;
   }
 
