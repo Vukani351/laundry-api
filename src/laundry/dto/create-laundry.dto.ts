@@ -4,7 +4,7 @@ export class CreateLaundryDto {
     @IsNumber()
     @IsPositive()
     @IsNotEmpty()
-    owner_id: number;
+    phone: number;
 
     @IsNumber()
     @IsPositive()
@@ -22,6 +22,5 @@ export class CreateLaundryDto {
     price: number;
 
     @IsString()
-    @IsNotEmpty()
     status: string;
 }

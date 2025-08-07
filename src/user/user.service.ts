@@ -70,7 +70,7 @@ export class UserService {
     if (!user) {
       throw new Error('User not found');
     }
-    return user;
+    return user.toJSON();
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
