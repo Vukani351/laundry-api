@@ -1,4 +1,6 @@
-import { IsNumber, IsPositive, IsNotEmpty, IsString } from "@nestjs/class-validator";
+import { IsNumber, IsPositive, IsNotEmpty, IsString, IsDateString } from "@nestjs/class-validator";
+import { DataType, DateDataType } from "sequelize";
+import { IsDate } from "sequelize-typescript";
 
 export class CreateLaundryDto {
     @IsNumber()
@@ -14,6 +16,11 @@ export class CreateLaundryDto {
     @IsNumber()
     @IsPositive()
     @IsNotEmpty()
+    owner_id: number;
+
+    @IsNumber()
+    @IsPositive()
+    @IsNotEmpty()
     weight: number;
 
     @IsNumber()
@@ -23,4 +30,7 @@ export class CreateLaundryDto {
 
     @IsString()
     status: string;
+
+    @IsDateString()
+    created_at: DateDataType;
 }
