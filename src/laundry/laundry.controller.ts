@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { LaundryService } from './laundry.service';
 import { CreateLaundryDto } from './dto/create-laundry.dto';
 import { UpdateLaundryDto } from './dto/update-laundry.dto';
@@ -14,7 +14,6 @@ export class LaundryController {
     try {
       return this.laundryService.create({ ...createLaundryDto });
     } catch (error) {
-      //  show this error correct 
       console.log("Issue with creating laundry item: \n", error);
       return { status: 500, error: error };
     }
@@ -30,7 +29,7 @@ export class LaundryController {
     return this.laundryService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put('update/:id')
   update(@Param('id') id: string, @Body() updateLaundryDto: UpdateLaundryDto) {
     return this.laundryService.update(+id, updateLaundryDto);
   }

@@ -4,7 +4,6 @@ import { CreateLaundryDto } from './dto/create-laundry.dto';
 import { UpdateLaundryDto } from './dto/update-laundry.dto';
 import { Laundry } from './entities/laundry.model';
 import { UserService } from '@/user/user.service';
-import { Laundromat } from '@/laundromat/entities/laundromat.model';
 
 @Injectable()
 export class LaundryService {
@@ -15,11 +14,6 @@ export class LaundryService {
   ) { }
 
   async create(createLaundryDto: CreateLaundryDto): Promise<Laundry | any> {
-    /*
-    * todo:
-    * verify that this laundry is not created using created date as one of the keys
-    * add logic to find or create.
-    */
     const user = await this.userService.findOne(createLaundryDto.admin_id).then(data => { return data; });
     if (!user) return {
       status: 400,
@@ -28,7 +22,7 @@ export class LaundryService {
 
     const old_Laundry = await this.laundryModel.findOne({
       where: {
-        created_at: createLaundryDto.created_at,
+        created_at: createLaundryDto.created_at, // could break if user brings 2 items.
         owner_id: createLaundryDto.owner_id
       }
     }).then(data => data?.toJSON());
@@ -57,7 +51,7 @@ export class LaundryService {
     if (!laundry) {
       throw new NotFoundException(`Laundry with id ${id} not found`);
     }
-    return laundry.update(updateLaundryDto);
+    return laundry.update({ ...updateLaundryDto });
   }
 
   async remove(id: number): Promise<void> {
