@@ -13,7 +13,7 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
+  @Get('all')
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
@@ -30,6 +30,12 @@ export class UserController {
   @Get(':id')
   findOne(@Param('id') id: string): Promise<User | null> {
     return this.userService.findOne(Number(id));
+  }
+
+  @Get('/phone/:phone')
+  findOneByPhone(@Param('phone') phone: string): Promise<User | null> {
+    console.log("phone: ", phone);
+    return this.userService.findOneByPhone(Number(phone));
   }
 
   @Put('update/:id')

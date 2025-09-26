@@ -73,6 +73,18 @@ export class UserService {
     return user.toJSON();
   }
 
+  async findOneByPhone(phone: number): Promise<User> {
+    const user = await this.userModel.findOne({
+      where: {
+        phone: phone
+      }
+    });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user.toJSON();
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userModel.findByPk(id);
     if (!user) {
