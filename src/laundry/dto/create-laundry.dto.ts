@@ -31,6 +31,12 @@ export class CreateLaundryDto {
     @IsString()
     status: string;
 
+    @IsString()
+    clientName: string;
+
+    @IsString()
+    isPaid: boolean;
+
     @IsDateString()
     created_at: DateDataType;
 }
