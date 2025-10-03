@@ -38,6 +38,14 @@ export class LaundryService {
     return this.laundryModel.findAll();
   }
 
+  async findByOwner(ownerId: number): Promise<Laundry[]> {
+    return this.laundryModel.findAll({
+      where: {
+        owner_id: ownerId
+      }
+    });
+  }
+
   async findOne(id: number): Promise<Laundry> {
     const laundry = await this.laundryModel.findByPk(id);
     if (!laundry) {
