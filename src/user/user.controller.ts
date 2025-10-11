@@ -18,10 +18,10 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get('login')
+  @Post('login')
   login(
-    @Body('firstname') firstname: string,
     @Body('phone') phone: number,
+    @Body('firstname') firstname: string,
     @Body('lastname') lastname: string
   ): Promise<string | null> {
     return this.userService.login(firstname, lastname, phone);
