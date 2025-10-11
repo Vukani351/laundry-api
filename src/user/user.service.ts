@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.model';
 import { JwtService } from '@nestjs/jwt';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -48,7 +49,9 @@ export class UserService {
   async login(firstname: string, secondname: string, phone: number): Promise<any> {
     const user = await this.userModel.findOne({
       where: {
-        username: firstname + ' ' + secondname,
+        username: {
+          [Op.like]: `%${firstname}%`
+        },
         phone: phone
       }
     }).then(user => user?.toJSON());
