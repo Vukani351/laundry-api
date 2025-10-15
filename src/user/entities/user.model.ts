@@ -41,7 +41,7 @@ export class User extends Model {
 
     @Column({
         type: DataType.TEXT,
-        allowNull: true, // This is the default, but explicit is clearer
+        allowNull: true,
     })
     address: string;
 

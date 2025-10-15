@@ -10,6 +10,7 @@ export class UserController {
 
   @Post('create')
   create(@Body() createUserDto: CreateUserDto): Promise<string> {
+    console.log("data: ", createUserDto);
     return this.userService.create(createUserDto);
   }
 
@@ -34,7 +35,6 @@ export class UserController {
 
   @Get('/phone/:phone')
   findOneByPhone(@Param('phone') phone: string): Promise<User | null> {
-    console.log("phone: ", phone);
     return this.userService.findOneByPhone(Number(phone));
   }
 

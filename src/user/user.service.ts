@@ -25,7 +25,7 @@ export class UserService {
     * */
     const user = await this.userModel.findOne({
       where: {
-        username: createUserDto.firstName + ' ' + createUserDto.lastName,
+        username: createUserDto.firstName/* + ' ' + createUserDto.lastName */,
         phone: createUserDto.phone,
       }
     }).then(user => user?.toJSON());
@@ -36,7 +36,7 @@ export class UserService {
       throw new UnauthorizedException('User email or number is missing.');
     }
     const newUserDetails = {
-      username: createUserDto.firstName + ' ' + createUserDto.lastName,
+      username: createUserDto.firstName/* + ' ' + createUserDto.lastName */,
       phone: createUserDto.phone,
       role_id: createUserDto!.role_id,
       address: createUserDto?.address
