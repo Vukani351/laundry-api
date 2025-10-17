@@ -28,3 +28,8 @@ export class Role extends Model {
     @HasMany(() => User)
     users: User[];
 }
+
+export enum RoleId {
+    OWNER = 0,
+    client = 1,
+}

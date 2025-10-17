@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.model';
 import { JwtService } from '@nestjs/jwt';
 import { Op } from 'sequelize';
+import { RoleId } from '@/role/role.model';
 
 @Injectable()
 export class UserService {
@@ -61,7 +62,7 @@ export class UserService {
 
     return {
       access_token: await this.jwtService.sign({
-        sub: user.id, username: user.username, role_id: user.role_id, address: user.address
+        id: user.id, firstName: user.username, role_id: user.role_id, address: user.address, phone: user.phone
       })
     };
   }
