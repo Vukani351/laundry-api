@@ -1,3 +1,4 @@
+import { Laundromat } from '@/laundromat/entities/laundromat.model';
 import { User } from '@/user/entities/user.model';
 import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 
@@ -28,6 +29,13 @@ export class Laundry extends Model {
 
     @BelongsTo(() => User, 'admin_id')
     admin: User;
+
+    @ForeignKey(() => User)
+    @Column(DataType.INTEGER)
+    laundromat_id: number;
+
+    @BelongsTo(() => Laundromat, 'laundromat_id')
+    laundromat: Laundromat;
 
     @Column(DataType.DECIMAL(10, 2))
     weight: number;

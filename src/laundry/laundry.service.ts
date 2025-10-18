@@ -38,12 +38,25 @@ export class LaundryService {
     return this.laundryModel.findAll();
   }
 
-  async findByOwner(ownerId: number): Promise<Laundry[]> {
-    return this.laundryModel.findAll({
+  // define the return object structure DTO.
+  async findByLaundromatId(laundromatId: number): Promise<any> {
+    const laundry = await this.laundryModel.findAll({
       where: {
-        owner_id: ownerId
+        laundromat_id: laundromatId
       }
     });
+
+    if (!laundry || laundry.length == 0) {
+      return {
+        status: 204,
+        message: "Laundromat has no laundry yet."
+      }
+    }
+
+    return {
+      status: 200,
+      laundry: laundry
+    }
   }
 
   async findOne(id: number): Promise<Laundry> {

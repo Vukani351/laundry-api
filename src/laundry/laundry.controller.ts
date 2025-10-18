@@ -29,9 +29,9 @@ export class LaundryController {
     return this.laundryService.findOne(+id);
   }
 
-  @Get(':ownerid')
-  findByLaundromat(@Param('ownerid') id: string) {
-    return this.laundryService.findByOwner(+id);
+  @Get('laundromat/:laundromatId')
+  findByLaundromatId(@Param('laundromatId') id: string) {
+    return this.laundryService.findByLaundromatId(+id);
   }
 
   @Put('update/:id')
