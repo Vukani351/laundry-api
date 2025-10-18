@@ -47,6 +47,19 @@ export class LaundromatService {
     }
   }
 
+  async findByOwner(id: number) {
+    try {
+      const laundromat = await this.laundromatModel.findOne({
+        where: {
+          user_id: id
+        }
+      });
+      return { status: 200, laundromat: laundromat?.toJSON() };
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async update(id: number, updateLaundromatDto: UpdateLaundromatDto) {
     try {
       const laundromat = await this.laundromatModel.findByPk(id);

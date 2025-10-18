@@ -34,6 +34,7 @@ CREATE TABLE "Laundry" (
   "id" SERIAL PRIMARY KEY,
   "owner_id" INTEGER REFERENCES "User"("id"),
   "admin_id" INTEGER REFERENCES "User"("id"),
+  "laundromat_id" INTEGER REFERENCES "Laundromat"("id"),
   "weight" DECIMAL(10,2),
   "price" DECIMAL(10,2),
   "status" VARCHAR(255),
