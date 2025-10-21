@@ -43,6 +43,9 @@ export class Laundry extends Model {
     @Column(DataType.DECIMAL(10, 2))
     price: number;
 
+    @Column(DataType.BOOLEAN)
+    paid: boolean;
+
     @Column(DataType.STRING)
     status: string;
 }
