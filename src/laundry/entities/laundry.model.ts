@@ -2,6 +2,13 @@ import { Laundromat } from '@/laundromat/entities/laundromat.model';
 import { User } from '@/user/entities/user.model';
 import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 
+enum LaundryStatus {
+    NOT_STARTED = 'not started',
+    WASHING = 'washing',
+    DRYING = 'drying',
+    READY = 'ready'
+}
+
 @Table({
     tableName: 'Laundry',
     timestamps: true,
@@ -46,6 +53,9 @@ export class Laundry extends Model {
     @Column(DataType.BOOLEAN)
     paid: boolean;
 
-    @Column(DataType.STRING)
-    status: string;
+    @Column({
+        type: DataType.ENUM(...Object.values(LaundryStatus)),
+        defaultValue: LaundryStatus.NOT_STARTED,
+    })
+    status: LaundryStatus;
 }
