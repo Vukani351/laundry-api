@@ -51,7 +51,7 @@ export class Laundry extends Model {
     price: number;
 
     @Column(DataType.BOOLEAN)
-    paid: boolean;
+    isPaid: boolean;
 
     @Column({
         type: DataType.ENUM(...Object.values(LaundryStatus)),

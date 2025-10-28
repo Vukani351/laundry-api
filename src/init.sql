@@ -36,7 +36,7 @@ CREATE TABLE "Laundry" (
   "admin_id" INTEGER REFERENCES "User"("id"),
   "laundromat_id" INTEGER REFERENCES "Laundromat"("id"),
   "weight" DECIMAL(10,2),
-  "paid" BOOLEAN DEFAULT FALSE,
+  "isPaid" BOOLEAN DEFAULT FALSE,
   "price" DECIMAL(10,2),
   "status" VARCHAR(255),
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
