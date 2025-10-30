@@ -53,9 +53,19 @@ export class LaundryService {
       }
     }
 
+    const laundryData = await Promise.all(
+      laundry.map(async (laundryItem) => {
+        const userData = await this.userService.findOne(laundryItem.toJSON().owner_id);
+        return {
+          ...laundryItem.toJSON(),
+          clientNumber: userData.phone
+        };
+      })
+    );
+
     return {
       status: 200,
-      laundry: laundry
+      laundry: laundryData
     }
   }
 
